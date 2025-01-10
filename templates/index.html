@@ -1,12 +1,7 @@
 <!DOCTYPE HTML>
-<!--
-	Paradigm Shift by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
-		<title>Paradigm Shift by HTML5 UP</title>
+		<title>Our Sweet Caffee</title>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 		<meta name="description" content=""/>
@@ -22,9 +17,9 @@
 			<section class="intro">
 				<header>
 					<h1>Our small Caffe</h1>
-					<p>A free responsive caffe for you and me<a href="#first">@ajlkn</a> / <a href="https://html5up.net">HTML5 UP</a></p>
+					<p>A free responsive caffe for you and me -- <a href="#first">About us</a> / <a href="#second">Our Cafes</a></p>
 					<ul class="actions">
-						<li><a href="#first" class="arrow scrolly" onclick="window.location.hash='#first'"><span class="label">Next</span></a></li>
+						<li><a href="#first" class="arrow scrolly" onclick="window.location.hash='#first'"><span class="label">Cafes</span></a></li>
 					</ul>
 				</header>
 				<div class="content">
@@ -38,7 +33,7 @@
 					<h2>The Cozy Coffee Space</h2>
 				</header>
 				<div class="content">
-					<p><strong>A coffee space is more than just a place to grab a cup of coffee; it's a haven where aromas, ambiance, and community come together. Designed to be a retreat from the
+					<p>A coffee space is more than just a place to grab a cup of coffee; it's a haven where aromas, ambiance, and community come together. Designed to be a retreat from the
 						daily grind, a coffee space offers a warm, inviting atmosphere where people can relax, connect, or focus on their work.
 
 						The perfect coffee space combines elements of comfort and style. Soft lighting, cozy seating arrangements, and carefully curated décor set the mood. The gentle hum of
@@ -60,7 +55,7 @@
 			<!-- Section -->
 			<section>
 				<header>
-					<h2>Feugiat consequat tempus ultrices</h2>
+					<h2>What we provide</h2>
 				</header>
 				<div class="content">
 					<p><strong>Etiam tristique libero</strong> eu nibh porttitor amet fermentum. Nullam venenatis erat id vehicula ultrices sed ultricies condimentum.</p>
@@ -80,27 +75,77 @@
 			<!-- Section -->
 			<section>
 				<header>
-					<h2>Ultrices erat magna sed condimentum</h2>
+					<h2 id="second">Our Cafes</h2>
+
 				</header>
 				<div class="content">
-					<p><strong>Integer mollis egestas</strong> nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
 
 					<!-- Section -->
+					{% for cafe in coffee_list %}
 					<section>
 						<header>
-							<h3>Erat aliquam</h3>
-							<p>Vehicula ultrices dolor amet ultricies et condimentum. Magna sed etiam consequat, et lorem adipiscing sed dolor sit amet, consectetur amet do eiusmod tempor incididunt
-								ipsum suspendisse ultrices gravida.</p>
+							<h3>{{cafe.name}}</h3>
+							<p>{{cafe.location}}</p>
+							<table>
+								<tr>
+									<td>Sockets for the clients:</td>
+									{% if cafe.has_sockets %}
+									<td>Yes</td>
+									{% else %}
+									<td>No</td>
+									{% endif %}
+								</tr>
+								<tr>
+									<td>Toilets:</td>
+									{% if cafe.has_toilets %}
+									<td>
+										Yes
+									</td>
+									{% else %}
+									<td>No</td>
+									{% endif %}
+								</tr>
+								<tr>
+									<td>
+										Wi-Fi Access:
+									</td>
+									{% if cafe.has_wifi %}
+									<td>
+										Yes
+									</td>
+									{% else %}
+									<td>No</td>
+									{% endif %}
+								</tr>
+								<tr>
+									<td>Can take calls:</td>
+									{% if cafe.can_take_calls %}
+									<td>
+										Yes
+									</td>
+									{% else %}
+									<td>No</td>
+									{% endif %}
+								</tr>
+								<tr>
+									<td>Number of seats:</td>
+									<td>{{cafe.seats}}</td>
+								</tr>
+								<tr>
+									<td>Price per coffee:</td>
+									<td>{{cafe.coffee_price}}</td>
+								</tr>
+							</table>
 						</header>
 						<div class="content">
 							<div class="gallery">
-								<a href="images/gallery/fulls/01.jpg" class="landscape"><img src="images/gallery/thumbs/01.jpg" alt=""/></a>
-								<a href="images/gallery/fulls/02.jpg"><img src="images/gallery/thumbs/02.jpg" alt=""/></a>
-								<a href="images/gallery/fulls/03.jpg"><img src="images/gallery/thumbs/03.jpg" alt=""/></a>
-								<a href="images/gallery/fulls/04.jpg" class="landscape"><img src="images/gallery/thumbs/04.jpg" alt=""/></a>
+								<a target="_blank" href="{{cafe.map_url}}" class="landscape"><img src="{{cafe.img_url}}" alt=""/></a>
+
 							</div>
 						</div>
 					</section>
+					{% endfor %}
+
 
 					<!-- Section -->
 					<section>
