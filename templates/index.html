@@ -7,6 +7,7 @@
 		<meta name="description" content=""/>
 		<meta name="keywords" content=""/>
 		<link rel="stylesheet" href="../static/assets/css/main.css"/>
+		{% from "bootstrap5/form.html" import render_form %}
 	</head>
 	<body class="is-preload">
 
@@ -17,7 +18,7 @@
 			<section class="intro">
 				<header>
 					<h1>Our small Caffe</h1>
-					<p>A free responsive caffe for you and me -- <a href="#first">About us</a> / <a href="#second">Our Cafes</a></p>
+					<p>A free responsive caffe for you and me -- <a href="#first">About us</a> / <a href="#second">Our Cafes</a> / <a href="#sectionadd">Add new Coffee</a></p>
 					<ul class="actions">
 						<li><a href="#first" class="arrow scrolly" onclick="window.location.hash='#first'"><span class="label">Cafes</span></a></li>
 					</ul>
@@ -136,6 +137,10 @@
 									<td>{{cafe.coffee_price}}</td>
 								</tr>
 							</table>
+							</h5>
+							<a href="{{url_for('delete_post', post_id=cafe.id)}}">
+								<h5 style="text-align: right;">Delete</h5>
+							</a>
 						</header>
 						<div class="content">
 							<div class="gallery">
@@ -147,107 +152,24 @@
 					{% endfor %}
 
 
-					<!-- Section -->
-					<section>
-						<header>
-							<h3>Nisl consequat</h3>
-							<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam sed facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna
-								ullamcorper, amet mauris. Ut magna finibus nisi nec lacinia ipsum maximus.</p>
-						</header>
-						<div class="content">
-							<div class="gallery">
-								<a href="images/gallery/fulls/05.jpg" class="landscape"><img src="images/gallery/thumbs/05.jpg" alt=""/></a>
-								<a href="images/gallery/fulls/06.jpg"><img src="images/gallery/thumbs/06.jpg" alt=""/></a>
-								<a href="images/gallery/fulls/07.jpg"><img src="images/gallery/thumbs/07.jpg" alt=""/></a>
-							</div>
-						</div>
-					</section>
 
-					<!-- Section -->
-					<section>
-						<header>
-							<h3>Lorem gravida</h3>
-							<p>Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aenean ornare velit lacus, ac varius sed enim lorem ullamcorper dolore. ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis.</p>
-						</header>
-						<div class="content">
-							<div class="gallery">
-								<a href="../static/images/gallery/fulls/08.jpg" class="portrait"><img src="../static/images/gallery/thumbs/08.jpg" alt=""/></a>
-								<a href="../static/images/gallery/fulls/09.jpg" class="portrait"><img src="../static/images/gallery/thumbs/09.jpg" alt=""/></a>
-								<a href="../static/images/gallery/fulls/10.jpg" class="landscape"><img src="../static/images/gallery/thumbs/10.jpg" alt=""/></a>
-							</div>
-						</div>
-					</section>
-
-				</div>
-			</section>
 
 			<!-- Section -->
-			<section>
+			<section id="sectionadd">
 				<header>
-					<h2>Duis sed adpiscing veroeros amet</h2>
+					<h2>Add a new Coffee</h2>
 				</header>
 				<div class="content">
-					<p><strong>Proin tempus feugiat</strong> sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore.</p>
-					<ul class="actions">
-						<li><a href="#" class="button primary large">Get Started</a></li>
-						<li><a href="#" class="button large">Learn More</a></li>
-					</ul>
+					<p><strong>To provide you with the best service, we strive to keep our offerings updated. If you have information about a new coffee you'd like to suggest, please feel free to share it with us!</p>
+
+					        {{ ckeditor.load() }}
+                            {{ ckeditor.config(name='body') }}
+                            {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
 				</div>
 			</section>
 
 
-			<section>
-				<header>
-					<h2>Get in touch</h2>
-				</header>
-				<div class="content">
-					<p><strong>Auctor commodo</strong> interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis.</p>
-					<form>
-						<div class="fields">
-							<div class="field half">
-								<input type="text" name="name" id="name" placeholder="Name"/>
-							</div>
-							<div class="field half">
-								<input type="email" name="email" id="email" placeholder="Email"/>
-							</div>
-							<div class="field">
-								<textarea name="message" id="message" placeholder="Message" rows="7"></textarea>
-							</div>
-						</div>
-						<ul class="actions">
-							<li><input type="submit" value="Send Message" class="button primary"/></li>
-						</ul>
-					</form>
-				</div>
-				<footer>
-					<ul class="items">
-						<li>
-							<h3>Email</h3>
-							<a href="#">information@untitled.ext</a>
-						</li>
-						<li>
-							<h3>Phone</h3>
-							<a href="#">(000) 000-0000</a>
-						</li>
-						<li>
-							<h3>Address</h3>
-							<span>1234 Somewhere Road, Nashville, TN 00000</span>
-						</li>
-						<li>
-							<h3>Elsewhere</h3>
-							<ul class="icons">
-								<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-								<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-								<li><a href="#" class="icon brands fa-codepen"><span class="label">Codepen</span></a></li>
-							</ul>
-						</li>
-					</ul>
-				</footer>
-			</section>
+
 
 			<!-- Copyright -->
 			<div class="copyright">&copy; Untitled. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</div>
