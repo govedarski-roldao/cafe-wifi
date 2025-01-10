@@ -8,6 +8,8 @@
 		<meta name="keywords" content=""/>
 		<link rel="stylesheet" href="../static/assets/css/main.css"/>
 		{% from "bootstrap5/form.html" import render_form %}
+		{{ ckeditor.load() }}
+		{{ ckeditor.config(name='body') }}
 	</head>
 	<body class="is-preload">
 
@@ -137,7 +139,7 @@
 									<td>{{cafe.coffee_price}}</td>
 								</tr>
 							</table>
-							</h5>
+
 							<a href="{{url_for('delete_post', post_id=cafe.id)}}">
 								<h5 style="text-align: right;">Delete</h5>
 							</a>
@@ -153,36 +155,45 @@
 
 
 
+					<!-- Section -->
+					<section id="sectionadd">
+						<header>
+							<h2>Add a new Coffee</h2>
+						</header>
+						<div class="content">
+							<p><strong>To provide you with the best service, we strive to keep our offerings updated. If you have information about a new coffee you'd like to suggest, please feel free
+								to
+								share it with us!</strong></p>
+							{% with messages = get_flashed_messages(with_categories=true) %}
+							{% if messages %}
+							<ul>
+								{% for category, message in messages %}
+								<li class="alert alert-{{ category }}">{{ message }}</li>
+								{% endfor %}
+							</ul>
+							{% endif %}
+							{% endwith %}
+							<form method="POST" enctype="multipart/form-data">
+								{{ render_form(form) }}
 
-			<!-- Section -->
-			<section id="sectionadd">
-				<header>
-					<h2>Add a new Coffee</h2>
-				</header>
-				<div class="content">
-					<p><strong>To provide you with the best service, we strive to keep our offerings updated. If you have information about a new coffee you'd like to suggest, please feel free to share it with us!</p>
+							</form>
+						</div>
+					</section>
 
-					        {{ ckeditor.load() }}
-                            {{ ckeditor.config(name='body') }}
-                            {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+
+					<!-- Copyright -->
+					<div class="copyright">&copy; Untitled. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</div>
+
 				</div>
+
+				<!-- Scripts -->
+				<script src="../static/assets/js/jquery.min.js"></script>
+				<script src="../static/assets/js/jquery.scrolly.min.js"></script>
+				<script src="../static/assets/js/browser.min.js"></script>
+				<script src="../static/assets/js/breakpoints.min.js"></script>
+				<script src="../static/assets/js/util.js"></script>
+				<script src="../static/assets/js/main.js"></script>
 			</section>
-
-
-
-
-			<!-- Copyright -->
-			<div class="copyright">&copy; Untitled. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</div>
-
-		</div>
-
-		<!-- Scripts -->
-		<script src="../static/assets/js/jquery.min.js"></script>
-		<script src="../static/assets/js/jquery.scrolly.min.js"></script>
-		<script src="../static/assets/js/browser.min.js"></script>
-		<script src="../static/assets/js/breakpoints.min.js"></script>
-		<script src="../static/assets/js/util.js"></script>
-		<script src="../static/assets/js/main.js"></script>
-
 	</body>
 </html>

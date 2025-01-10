@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect, flash
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, Boolean, String
@@ -21,12 +21,14 @@ class CreateACoffee(FlaskForm):
     map_url = StringField("Url For the location", validators=[DataRequired()])
     img_url = StringField("Url to add an image", validators=[DataRequired()])
     location = StringField("Where is the coffee shop?", validators=[DataRequired()])
-    has_sockets = BooleanField("Does the coffee has electric cockets for the clients?", validators=[DataRequired()])
-    has_toilets = BooleanField("Does the coffee have bathroom?", validators=[DataRequired()])
-    has_wifi = BooleanField("Wi-fi access?", validators=[DataRequired()])
+    has_sockets = BooleanField("Does the coffee has electric sockets for the clients?")
+    has_toilets = BooleanField("Does the coffee have bathroom?")
+    has_wifi = BooleanField("Wi-fi access?")
+    can_take_calls = BooleanField("Can make calls?")
     seats = StringField("How many seats?", validators=[DataRequired()])
     coffee_price = StringField("Avarage coffee price?", validators=[DataRequired()])
     submit = SubmitField("Add coffee to our data base")
+
 
 class Base(DeclarativeBase):
     pass
@@ -45,12 +47,12 @@ class Cafe(db.Model):
     map_url: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     location: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
-    has_sockets: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    has_toilet: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    has_wifi: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    has_sockets: Mapped[bool] = mapped_column(Boolean)
+    has_toilet: Mapped[bool] = mapped_column(Boolean)
+    has_wifi: Mapped[bool] = mapped_column(Boolean)
+    can_take_calls: Mapped[bool] = mapped_column(Boolean)
     seats: Mapped[str] = mapped_column(String(250), nullable=False)
     coffee_price: Mapped[str] = mapped_column(String(250), nullable=False)
-
 
 
 with app.app_context():
@@ -59,7 +61,7 @@ with app.app_context():
 print(app.config['SQLALCHEMY_DATABASE_URI'])
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def home():
     form = CreateACoffee()
     if form.validate_on_submit():
@@ -69,16 +71,17 @@ def home():
             img_url=form.img_url.data,
             location=form.location.data,
             has_sockets=form.has_sockets.data,
-            has_toilets=form.has_toilets.data,
+            has_toilet=form.has_toilets.data,
             has_wifi=form.has_wifi.data,
+            can_take_calls = form.can_take_calls.data,
             seats=form.seats.data,
             coffee_price=form.coffee_price.data
         )
         db.session.add(new_coffee)
         db.session.commit()
+        flash('New coffee added successfully!', 'success')
         return redirect(url_for("home"))
-    result = db.session.execute(db.select(Cafe))
-    cafes = result.scalars().all()
+    cafes = Cafe.query.all()
     for cafe in cafes:
         print(cafe.name, cafe.location, cafe.coffee_price)
     return render_template("index.html", coffee_list=cafes, form=form)
